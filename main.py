@@ -41,19 +41,25 @@ def search():
 	input = request.form["address"].replace(' ', '+')
 	info = requests.get(API + input + "&limit=1").content.decode("utf-8")
 	address_properties = json.loads(info)["features"][0]["properties"]
-	gps_coordinates = json.loads(info)["features"][0]["geometry"]
-	# print(coordinates)
+	gps_coordinates = json.loads(info)["features"][0]["geometry"]["coordinates"]
 	lambert_x = address_properties["x"]
 	lambert_y = address_properties["y"]
 	csv_file = csv.reader(open(CSV_FILE_PATH, "r"), delimiter=";")
-	
+	result = {
+		"address": address_properties["label"],
+		"operateur":"",
+		"2G": False,
+		"3G": False,
+		"4G": False
+	}
 	for row in csv_file:
 		if row[1] != 'X' and int(row[1]) >= lambert_x:
-			print(row[1], row[2])
-			print("2G: " + row[3], "3G: " + row[4], "4G: " + row[5])
-			print("Operateur: " +  OPERATORS[row[0]])
+			result["operateur"] = OPERATORS[row[0]]
+			result["2G"] = row[3]
+			result["3G"] = row[4]
+			result["4G"] = row[5]
 			break
-	return(address_properties)
+	return(result)
 
 
 @app.route('/', methods=['GET'])
