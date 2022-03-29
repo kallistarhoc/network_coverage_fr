@@ -16,8 +16,6 @@ OPERATORS = {
 }
 
 app = Flask(__name__)
-app.config["DEBUG"] = True
-
 def get_result(csv_file, address_properties, closest, index):
     result = {}
     for row in csv_file:
@@ -45,6 +43,7 @@ def search():
     csv_file = list(csv.reader(open(CSV_FILE_PATH, "r"), delimiter=";"))[1:-1]
     input = request.form["address"].replace(' ', '+')
     info = requests.get(API + input + "&limit=1").content.decode("utf-8")
+    print(info)
     address_properties = json.loads(info)["features"][0]["properties"]
     lambert_x = address_properties["x"]
     lambert_y = address_properties["y"]

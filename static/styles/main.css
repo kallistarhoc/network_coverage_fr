@@ -1,0 +1,24 @@
+.main {
+    text-align:center;
+    margin-top: 20%;
+}
+
+.input {
+    width: 25%; 
+    padding: 10px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+#title {
+    color:rgb(116, 116, 116);
+}
+#submit {
+    background-color: #7aa394;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+}
